@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RumrumSnake — Trang chính thức</title>
+    <meta
+      name="description"
+      content="Trang chính thức RumrumSnake: mô tả game, ảnh chụp, nhật ký cập nhật, và liên kết tải cho Windows, Android, macOS."
+    />
+    <meta name="author" content="Rum" />
+    <meta property="og:title" content="RumrumSnake — Trang chính chủ" />
+    <meta
+      property="og:description"
+      content="Tải RumrumSnake, xem ảnh chụp và nhật ký cập nhật."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/cover.png" />
+    <meta name="theme-color" content="#0ea5e9" />
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+      :root {
+        --bg: #0b0e13;
+        --panel: #11161d;
+        --muted: #94a3b8;
+        --text: #e5f0ff;
+        --brand: #0ea5e9; /* sky-500 */
+        --brand-2: #22d3ee; /* cyan-400 */
+        --ok: #22c55e;
+        --warn: #f59e0b;
+        --danger: #ef4444;
+        --radius: 18px;
+        --shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f8fafc;
+          --panel: #ffffff;
+          --muted: #64748b;
+          --text: #0f172a;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: radial-gradient(
+            1200px 600px at 10% -10%,
+            rgba(34, 211, 238, 0.12),
+            transparent 60%
+          ),
+          radial-gradient(
+            900px 500px at 110% 10%,
+            rgba(14, 165, 233, 0.14),
+            transparent 60%
+          ),
+          var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+      a {
+        color: var(--brand);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .container {
+        width: min(1100px, 92vw);
+        margin-inline: auto;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(10px);
+        background: color-mix(in srgb, var(--bg) 75%, transparent);
+        border-bottom: 1px solid
+          color-mix(in srgb, var(--text) 10%, transparent);
+        z-index: 50;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+      }
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        display: grid;
+        place-items: center;
+        box-shadow: var(--shadow);
+      }
+      .logo svg {
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+      }
+      .nav a.btn {
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        color: white;
+        font-weight: 700;
+        box-shadow: var(--shadow);
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 34px;
+        align-items: center;
+        padding: 56px 0 28px;
+      }
+      .hero h1 {
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.15;
+        margin: 0;
+      }
+      .hero p {
+        color: var(--muted);
+        margin: 14px 0 22px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        background: color-mix(in srgb, var(--text) 8%, transparent);
+        border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+        border-radius: 999px;
+        font-size: 14px;
+      }
+      .cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 6px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+        padding: 12px 16px;
+        border-radius: 14px;
+        background: var(--panel);
+        color: var(--text);
+        font-weight: 700;
+        box-shadow: var(--shadow);
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        transition: 0.15s ease;
+        text-decoration: none;
+      }
+      .btn.primary {
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        border-color: transparent;
+      }
+      .btn.ghost {
+        background: transparent;
+      }
+      .mock {
+        aspect-ratio: 16/10;
+        border-radius: var(--radius);
+        background: linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--text) 6%, transparent),
+            transparent
+          ),
+          radial-gradient(
+            600px 400px at 70% 30%,
+            rgba(34, 211, 238, 0.3),
+            transparent 60%
+          ),
+          url("assets/screenshot-1.jpg") center/cover no-repeat;
+        border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+        box-shadow: var(--shadow);
+      }
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+      .features {
+        padding: 34px 0;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+        border-radius: var(--radius);
+        padding: 18px;
+        box-shadow: var(--shadow);
+      }
+      .card h3 {
+        margin: 0 0 6px;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+      .cards .card {
+        display: flex;
+        gap: 12px;
+      }
+      .icon {
+        inline-size: 42px;
+        block-size: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: color-mix(in srgb, var(--text) 6%, transparent);
+        border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+      }
+      .section-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 28px 0 14px;
+      }
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .thumb {
+        aspect-ratio: 16/9;
+        background: #0b1220 url("assets/Screenshot 2025-10-20 183231.png")
+          center/cover no-repeat;
+        border-radius: 14px;
+        border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+      }
+      .thumb:nth-child(2) {
+        background-image: url("assets/Screenshot 2025-10-20 183205.png");
+      }
+      .thumb:nth-child(3) {
+        background-image: url("assets/Screenshot 2025-10-20 183124.png");
+      }
+      .downloads {
+        padding: 12px 0 34px;
+      }
+      .dl-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .dl-card {
+        padding: 16px;
+        border-radius: 14px;
+        background: var(--panel);
+        border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+      }
+      .dl-card h4 {
+        margin: 0 0 10px;
+      }
+      .changelog pre {
+        margin: 0;
+        white-space: pre-wrap;
+      }
+      .kbd {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas,
+          "Liberation Mono", monospace;
+        background: color-mix(in srgb, var(--text) 8%, transparent);
+        border: 1px solid color-mix(in srgb, var(--text) 16%, transparent);
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      .faq details {
+        background: var(--panel);
+        border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+        border-radius: 14px;
+        padding: 12px 14px;
+      }
+      .faq summary {
+        cursor: pointer;
+        font-weight: 700;
+      }
+      footer {
+        border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+        padding: 24px 0;
+        margin-top: 28px;
+        color: var(--muted);
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+        background: color-mix(in srgb, var(--text) 6%, transparent);
+        border-radius: 999px;
+      }
+
+      @media (max-width: 980px) {
+        .hero {
+          grid-template-columns: 1fr;
+          padding-top: 28px;
+        }
+        .cards {
+          grid-template-columns: 1fr 1fr;
+        }
+        .dl-grid {
+          grid-template-columns: 1fr;
+        }
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 640px) {
+        .cards {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container nav">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <!-- Snake logo (inline SVG) -->
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 10a6 6 0 1 1 12 0v3a3 3 0 0 0 3 3h1a2 2 0 1 1 0 4h-7a5 5 0 0 1-5-5V9"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <circle cx="12" cy="7.5" r="1.2" fill="#fff" />
+            </svg>
+          </div>
+          RumrumSnake
+        </div>
+        <nav style="display: flex; gap: 14px; align-items: center">
+          <a href="/RumrumSnake/download.html" class="btn">Tải về</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="container hero">
+      <div>
+        <span class="pill">🎮 Game Arcade • Rắn săn mồi • Offline/Online</span>
+        <h1>RumrumSnake — nuốt điểm số, lướt mượt như rắn!</h1>
+        <p>
+          RumrumSnake là trò chơi rắn săn mồi tốc độ cao với vật lý mượt, hiệu
+          ứng đẹp và nhiều chế độ. Trang này giúp bạn cập nhật phiên bản mới
+          nhất, xem ảnh chụp, và tải game an toàn.
+        </p>
+        <div class="cta">
+          <a
+            class="btn primary"
+            href="/RumrumSnake/download.html"
+            aria-label="Tới phần tải về"
+          >
+            <!-- download icon -->
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+            Tải ngay
+          </a>
+          <a class="btn" href="#features">Tính năng</a>
+          <a class="btn ghost" href="#screenshots">Ảnh chụp</a>
+        </div>
+        <p class="muted" style="margin-top: 10px">
+          Phiên bản mới: <span id="ver">v1.0.0</span> • Cập nhật:
+          <time id="date" datetime="2025-09-07">07/09/2025</time>
+        </p>
+      </div>
+      <div
+        class="mock"
+        role="img"
+        aria-label="Ảnh minh họa gameplay RumrumSnake"
+      ></div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="container features">
+      <div class="section-title">
+        <h2 style="margin: 0">Tính năng nổi bật</h2>
+        <span class="badge">📦 Nhẹ – chạy mượt trên máy yếu</span>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="icon" aria-hidden="true">🐍</div>
+          <div>
+            <h3>Điều khiển siêu mượt</h3>
+            <p class="muted">
+              Phản hồi nhanh, hỗ trợ bàn phím, độ trễ thấp.
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">🎵</div>
+          <div>
+            <h3>Tùy chỉnh âm thanh</h3>
+            <p class="muted">
+              Tăng giảm âm lượng, chọn nhạc, thêm nhạc và xoá nhạc.
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">😽</div>
+          <div>
+            <h3>Bé mèo cute</h3>
+            <p class="muted">Xuất hiện chú mèo nhỏ mỉm cười mỗi khi game over.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section id="screenshots" class="container">
+      <div class="section-title">
+        <h2 style="margin: 0">Ảnh chụp màn hình</h2>
+      </div>
+      <div class="gallery">
+        <div class="thumb" role="img" aria-label="Gameplay 1"></div>
+        <div class="thumb" role="img" aria-label="Gameplay 2"></div>
+        <div class="thumb" role="img" aria-label="Gameplay 3"></div>
+      </div>
+    </section>
+
+    <!-- Requirements -->
+    <section class="container">
+      <div class="section-title">
+        <h2 style="margin: 0">Cấu hình tối thiểu</h2>
+        <span class="badge">Tối ưu cho máy yếu</span>
+      </div>
+      <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 16px">
+        <div class="card">
+          <h3>Windows</h3>
+          <ul>
+            <li>CPU: Intel Pentium Dual-Core (≈ 1.6 GHz)</li>
+            <li>RAM: 2 GB</li>
+            <li>GPU: iGPU Intel HD Graphics 3000</li>
+            <li>Dung lượng: 200 MB trống</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Changelog -->
+    <section class="container changelog">
+      <div class="section-title">
+        <h2 style="margin: 0">Nhật ký cập nhật</h2>
+      </div>
+      <div class="card">
+        <details open>
+          <summary><strong>v1.5.2</strong> – 20/10/2025</summary>
+          <pre>
+• Ra mắt chính thức
+• Thêm chế độ No wall
+• Thêm Main Menu
+• Tùy chỉnh âm thanh
+• Tối ưu hiệu năng cho máy yếu</pre
+          >
+        </details>
+        <details>
+          <summary><strong>v1.5.0</strong> – 30/08/2024</summary>
+          <pre>
+• Ra mắt chính thức
+• Cải thiện UI cài đặt
+ </pre
+          >
+        </details>
+        <details>
+          <summary><strong>v1.0.0-beta</strong> – 28/08/2024</summary>
+          <pre>
+• Sửa lỗi va chạm hiếm gặp
+</pre
+          >
+        </details>
+      </div>
+    </section>
+
+    <!-- FAQ & Support -->
+    <section id="faq" class="container faq">
+      <div class="section-title">
+        <h2 style="margin: 0">Hỏi đáp nhanh</h2>
+        <a class="btn" href="mailto:support@rumrumsnake.game"
+          >📧 Liên hệ hỗ trợ</a
+        >
+      </div>
+      <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 14px">
+        <details>
+          <summary>APK là gì? Có an toàn không?</summary>
+          <p>
+            APK là gói cài đặt ứng dụng Android. Bạn chỉ nên tải từ trang chính
+            thức này để đảm bảo an toàn.
+          </p>
+        </details>
+        <details>
+          <summary>Windows cảnh báo SmartScreen?</summary>
+          <p>
+            Do ứng dụng mới phát hành nên có thể bị cảnh báo. Chọn
+            <em>More info → Run anyway</em> hoặc chờ chứng chỉ ký số được phổ
+            biến rộng rãi.
+          </p>
+        </details>
+        <details>
+          <summary>
+            Cách bật cài đặt từ nguồn không xác định trên Android?
+          </summary>
+          <p>
+            Vào Cài đặt → Bảo mật → Cho phép cài đặt ứng dụng từ nguồn không xác
+            định (hoặc cho phép trình duyệt/Trình quản lý tệp cài APK).
+          </p>
+        </details>
+        <details>
+          <summary>Tôi có thể stream/ghi hình game?</summary>
+          <p>
+            Được phép. Bạn có thể kiếm tiền từ nội dung do bạn tạo có dùng
+            gameplay RumrumSnake.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div
+        class="container"
+        style="
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          flex-wrap: wrap;
+        "
+      >
+        <div>© <span id="year"></span> RumrumSnake. All rights reserved.</div>
+        <div style="display: flex; gap: 10px">
+          <a href="#" class="muted">Điều khoản</a>
+          <a href="#" class="muted">Chính sách riêng tư</a>
+          <a href="#" class="muted">X Report bug</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Auto year
+      document.getElementById("year").textContent = new Date().getFullYear();
+      // Copy checksum helper
+      function copySum(btn) {
+        const sum = btn.getAttribute("data-checksum");
+        navigator.clipboard.writeText(sum).then(() => {
+          btn.textContent = "✓ Đã copy";
+          setTimeout(() => (btn.textContent = "📋 Copy checksum"), 1400);
+        });
+      }
+      // Smooth anchor scroll
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const id = a.getAttribute("href");
+          const el = document.querySelector(id);
+          if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
